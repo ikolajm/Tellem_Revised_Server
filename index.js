@@ -8,7 +8,31 @@ const seedRequests = require('./seed/data/seedRequests');
 const seedConversations = require('./seed/data/seedConversation');
 const seedMessages = require('./seed/data/seedMessages');
 
-// const http = require('http').createServer(app);
+const http = require('http').createServer(app);
+const io = require('socket.io')(http, {
+    cors: {
+        origin: "*",
+      },
+});
+io.on('connection', (socket) => {
+    // Join Room
+    // console.log(socket)
+    const { roomId } = socket.handshake.query;
+    socket.join(roomId);
+    console.log('a user connected');
+
+    // New message
+    socket.on("NEW_MESSAGE", (data) => {
+        console.log("new message")
+        io.in(roomId).emit("NEW_MESSAGE", data);
+    });
+
+    // Disconnect
+    socket.on("disconnect", () => {
+        console.log("user disconnected")
+        socket.leave(roomId);
+    });
+});
 
 // Body parser replacement
 app.use(express.json());
@@ -40,4 +64,4 @@ app.use("/message", Message);
 // seedConversations.createConversations();
 // seedMessages.createMessages();
 
-app.listen(port, () => console.log(`App is listening on port ${port}`));
+http.listen(port, () => console.log(`App is listening on port ${port}`));

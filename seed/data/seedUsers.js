@@ -4,39 +4,44 @@ const { v4: uuidv4 } = require('uuid');
 const User = require('../../db').User;
 
 const userArr  = [
+    // {
+    //     username: "IsaacWeir",
+    //     email: "isaac@test.com",
+    //     password: "test"
+    // },
+    // {
+    //     username: "pops",
+    //     email: "pops@test.com",
+    //     password: "test"
+    // },
+    // {
+    //     username: "NatalieHamm",
+    //     email: "natalie@test.com",
+    //     password: "test"
+    // },
+    // {
+    //     username: "LandonValley",
+    //     email: "landon@test.com",
+    //     password: "test"
+    // },
+    // {
+    //     username: "SaraFrazier",
+    //     email: "sara@test.com",
+    //     password: "test"
+    // },
+    // {
+    //     username: "TylerMojo",
+    //     email: "tyler@test.com",
+    //     password: "test"
+    // },
+    // {
+    //     username: "SethKiser",
+    //     email: "seth@test.com",
+    //     password: "test"
+    // },
     {
-        username: "IsaacWeir",
-        email: "isaac@test.com",
-        password: "test"
-    },
-    {
-        username: "pops",
-        email: "pops@test.com",
-        password: "test"
-    },
-    {
-        username: "NatalieHamm",
-        email: "natalie@test.com",
-        password: "test"
-    },
-    {
-        username: "LandonValley",
-        email: "landon@test.com",
-        password: "test"
-    },
-    {
-        username: "SaraFrazier",
-        email: "sara@test.com",
-        password: "test"
-    },
-    {
-        username: "TylerMojo",
-        email: "tyler@test.com",
-        password: "test"
-    },
-    {
-        username: "SethKiser",
-        email: "seth@test.com",
+        username: "searchme",
+        email: "search@test.com",
         password: "test"
     }
 ]

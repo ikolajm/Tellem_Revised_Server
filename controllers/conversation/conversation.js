@@ -40,21 +40,6 @@ router.get('/all', async (req, res) => {
     })
 })
 
-// Get batch of messages for conversation + all users involved
-router.post("/:id", async (req, res) => {
-    // Get all conversations that user is involved in
-    let conversation = await UserConversation.findOne({
-        where: { conversationId: req.params.id }
-    })
-
-    let obj = await formatSingleConversation.formatSingle(conversation);
-
-    res.json({
-        status: "SUCCESS",
-        conversation: obj
-    })
-})
-
 // Get all archived conversations
 router.get("/archived", async (req, res) => {
     // Get archives to add to query criteria
@@ -84,7 +69,7 @@ router.get("/archived", async (req, res) => {
 })
 
 // Archive a conversation
-router.get("/archive/:id", async (req, res) => {
+router.post("/archive/:id", async (req, res) => {
     let uuid = await uuidv4();
     let archive = {
         uuid,
@@ -115,8 +100,8 @@ router.post("/create", async (req, res) => {
         name: "",
         backgroundColor: colorGenerator.generate()
     })
-    // Create userConversationArchive instances
-    let users = [req.body.friendId];
+    // Create userConversation instances
+    let users = req.body.friendIds;
     users.push(req.user.id)
     const forLoop = async () => {
         for (let i = 0; i < users.length; i++) {
@@ -195,5 +180,20 @@ router.put("/update/:id", async (req, res) => {
         editedConversation: conversationEdit[1]
     })
 });
+
+// Get batch of messages for conversation + all users involved
+router.post("/:id", async (req, res) => {
+    // Get all conversations that user is involved in
+    let conversation = await UserConversation.findOne({
+        where: { conversationId: req.params.id }
+    })
+
+    let obj = await formatSingleConversation.formatSingle(conversation);
+
+    res.json({
+        status: "SUCCESS",
+        conversation: obj
+    })
+})
 
 module.exports = router;

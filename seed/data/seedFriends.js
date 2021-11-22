@@ -9,25 +9,30 @@ const mainTestUser = {
 }
 
 const friendsOfMainTest = [
+    // {
+    //     username: "IsaacWeir",
+    //     id: 17,
+    //     uuid: "e1dd95af-d046-477a-bd75-222889e0853f"
+    // },
+    // {
+    //     username: "pops",
+    //     id: 18,
+    //     uuid: "9034a9bf-38f1-4db4-aa54-850cc0ea544d"
+    // },
+    // {
+    //     username: "LandonValley",
+    //     id: 20,
+    //     uuid: "de1cc6b0-c00e-4a83-8480-48f778e0584c"
+    // },
+    // {
+    //     username: "SaraFrazier",
+    //     id: 23,
+    //     uuid: "f54ea8c1-19f4-415b-82c4-005ca2d1eb2f"
+    // },
     {
-        username: "IsaacWeir",
-        id: 17,
-        uuid: "e1dd95af-d046-477a-bd75-222889e0853f"
-    },
-    {
-        username: "pops",
-        id: 18,
-        uuid: "9034a9bf-38f1-4db4-aa54-850cc0ea544d"
-    },
-    {
-        username: "LandonValley",
-        id: 20,
-        uuid: "de1cc6b0-c00e-4a83-8480-48f778e0584c"
-    },
-    {
-        username: "SaraFrazier",
-        id: 23,
-        uuid: "f54ea8c1-19f4-415b-82c4-005ca2d1eb2f"
+        username: "unfriend",
+        id: 24,
+        uuid: "43050e79-875b-4a6b-ba03-e6c50589c4b3"
     }
 ]
 

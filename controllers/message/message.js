@@ -11,12 +11,10 @@ router.post("/create", async (req, res) => {
         content: req.body.content,
         type: "text",
         hidden: false,
-        userId: req.user.id,
+        author: req.user.id,
         conversationId: req.body.conversationId,
         edited: false,
     })
-
-    console.log(message)
 
     message.dataValues.user = req.user
 

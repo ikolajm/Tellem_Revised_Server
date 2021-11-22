@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Friend = require("../../db").Friend;
 const User = require("../../db").User;
+const { Op } = require("sequelize");
 
 router.get("/all", async (req, res) => {
     // Get all friends of the user
@@ -8,7 +9,8 @@ router.get("/all", async (req, res) => {
         where: { friendOf: req.user.uuid },
         order: [["createdAt", "ASC"]],
         include: {
-            model: User
+            model: User,
+            order: [["username", "DESC"]]
         }
     })
 
@@ -19,16 +21,16 @@ router.get("/all", async (req, res) => {
 })
 
 router.post("/delete", async (req, res) => {
-    let userFriendship = await Friend.findAll({
+    let userFriendship = await Friend.findOne({
         where: { userId: req.user.id, friendOf: req.body.friendUuid }
     })
 
-    let friendFriendship = await Friend.findAll({
+    let friendFriendship = await Friend.findOne({
         where: { userId: req.body.friendId, friendOf: req.user.uuid }
     })
 
     let deleteIds = [userFriendship.id, friendFriendship.id];
-    
+
     Friend.destroy({
         where: { id: { [Op.in]: deleteIds } }
     })

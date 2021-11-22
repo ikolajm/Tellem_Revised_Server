@@ -28,7 +28,6 @@ router.post('/create', async (req, res) => {
 
     let {username, email, password} = body
     password = await bcrypt.hashSync(password, 10)
-    console.log(colorGenerator.generate())
     let userToCreate = {
         uuid: await uuidv4(),
         username,
@@ -37,7 +36,6 @@ router.post('/create', async (req, res) => {
         idCode,
         backgroundColor: await colorGenerator.generate()
     }
-    console.log(userToCreate)
     let createdUser = await User.create(userToCreate);
     let token = jwt.sign( { uuid: createdUser.uuid }, process.env.JWT_SECRET, { expiresIn: 60*60*24 });
 
@@ -106,14 +104,21 @@ router.post("/authenticate", async (req, res) => {
     let sessionToken = req.body.token;
     jwt.verify(sessionToken, process.env.JWT_SECRET, async (err, decodedToken) => {
         if (err) {
-            res.json({
+            return res.json({
+                status: "ERROR",
+                message: "Valid user session not found with current token"
+            })
+        }
+
+        if (decodedToken === undefined) {
+            return res.json({
                 status: "ERROR",
                 message: "Valid user session not found with current token"
             })
         }
 
         let user = await User.findOne({ where: { uuid: decodedToken.uuid } })
-
+        
         res.json({
             status: "SUCCESS",
             user
