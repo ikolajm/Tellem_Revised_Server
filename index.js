@@ -7,7 +7,9 @@ const seedFriends = require('./seed/data/seedFriends');
 const seedRequests = require('./seed/data/seedRequests');
 const seedConversations = require('./seed/data/seedConversation');
 const seedMessages = require('./seed/data/seedMessages');
+const cors = require('cors')
 
+app.use(cors())
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
     cors: {
