@@ -61,7 +61,7 @@ router.post("/create/:uuid", async (req, res) => {
         userTo: req.params.uuid,
         authorId: req.user.id
     })
-    .then(created => res.json({ status: "SUCCESS" }))
+    .then(created => res.json({ status: "SUCCESS", created }))
     .catch(err => res.json({ status: "ERROR", err: err.message }))
 })
 

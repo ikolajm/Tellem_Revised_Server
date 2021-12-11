@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node index.js"
   },
   "keywords": [],
@@ -22,5 +22,9 @@
   },
   "engines": {
     "node": "12.x"
+  },
+  "devDependencies": {
+    "jest": "^27.4.3",
+    "supertest": "^6.1.6"
   }
 }

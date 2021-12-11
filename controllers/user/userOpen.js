@@ -9,10 +9,18 @@ const jwt = require('jsonwebtoken');
 // Create user (SIGN UP)
 router.post('/create', async (req, res) => {
     let body = req.body;
+    let { username, email, password, confirmPassword } = body
+    if (username.trim() === '' || email.trim() === '' || password.trim() === '' || confirmPassword === '') {
+        return res.json({
+            status: "ERROR",
+            message: "Cannot create user with missing fields"
+        })
+    }
+
     // Check if an account is already using that email
     let accountSearch = await User.findOne({
         where: {
-            email: body.email
+            email: email
         }
     })
     if (accountSearch !== null) {
@@ -26,7 +34,6 @@ router.post('/create', async (req, res) => {
     let idCode = Math.floor((Math.random() * 99999) + 10000);
     idCode = Number(idCode.toString().substring(0, 5))
 
-    let {username, email, password} = body
     password = await bcrypt.hashSync(password, 10)
     let userToCreate = {
         uuid: await uuidv4(),
@@ -57,6 +64,12 @@ router.post('/create', async (req, res) => {
 router.post('/login', async (req, res) => {
     let body = req.body;
     let { email, password } = body;
+    if (email.trim() === '' || password.trim() === '') {
+        return res.json({
+            status: "ERROR",
+            message: "Cannot create account with null fields"
+        })
+    }
     let userSearch = await User.findOne({
         where: {
             email: email
@@ -90,7 +103,7 @@ router.post('/login', async (req, res) => {
             })
         }
 
-        let token = jwt.sign( { uuid: user.uuid }, process.env.JWT_SECRET, { expiresIn: 60*60*24 });
+        let token = await jwt.sign( { uuid: user.uuid }, process.env.JWT_SECRET, { expiresIn: 60*60*24 });
         res.json({
             status: "SUCCESS",
             sessionToken: token,
@@ -100,7 +113,7 @@ router.post('/login', async (req, res) => {
 })
 
 // Check the given token and see if the user has access to a quick load
-router.post("/authenticate", async (req, res) => {
+router.post("/authenticate", (req, res) => {
     let sessionToken = req.body.token;
     jwt.verify(sessionToken, process.env.JWT_SECRET, async (err, decodedToken) => {
         if (err) {

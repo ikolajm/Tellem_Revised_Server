@@ -163,6 +163,12 @@ router.post("/add-user/:id", async (req, res) => {
 // Save changes to conversation
 router.put("/update/:id", async (req, res) => {
     let { backgroundColor, name } = req.body;
+    if (backgroundColor.trim() === '') {
+        return res.json({
+            status: "ERROR",
+            message: "Please ensure a color is selected"
+        })
+    }
     let conversationEdit = await Conversation.update(
         {
             backgroundColor,

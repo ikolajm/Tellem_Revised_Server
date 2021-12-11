@@ -1,7 +1,6 @@
 require("dotenv").config();
 const express = require('express')
 const app = express();
-const port = process.env.PORT || 5000;
 const seedUsers = require('./seed/data/seedUsers');
 const seedFriends = require('./seed/data/seedFriends');
 const seedRequests = require('./seed/data/seedRequests');
@@ -44,6 +43,11 @@ sequelize.sync();
 
 app.use(require("./middleware/headers"));
 
+app.get('/', (req, res) => {
+    res.json({
+        message: "Base endpoint reached successfully!"
+    })
+})
 const UserOpen = require("./controllers/user/userOpen");
 app.use("/user", UserOpen);
 // Closed Routes
@@ -66,4 +70,4 @@ app.use("/message", Message);
 // seedConversations.createConversations();
 // seedMessages.createMessages();
 
-http.listen(port, () => console.log(`App is listening on port ${port}`));
+module.exports = http;

@@ -10,6 +10,12 @@ router.put('/update/:uuid', async (req, res) => {
     const body = req.body;
 
     const {username, email, backgroundColor, idCode} = body;
+    if (username.trim() === '' || email.trim() === '' || backgroundColor.trim() === '') {
+        return res.json({
+            status: "ERROR",
+            message: "All fields must be filled in"
+        })
+    }
     let incomingObj = {
         username,
         email,
@@ -42,14 +48,28 @@ router.put('/update/:uuid', async (req, res) => {
 router.put('/update/:uuid/password', async (req, res) => {
     const body = req.body;
 
-    let {password, newPassword} = body;
+    let {password, newPassword, confirmNewPassword} = body;
+
+    if (password.trim() === '' || newPassword.trim() === '' || confirmNewPassword.trim() === '') {
+        return res.json({
+            status: "ERROR",
+            message: "All fields must be filled in"
+        })
+    }
+
+    if (newPassword !== confirmNewPassword) {
+        return res.json({
+            status: "ERROR",
+            message: "New password does not match the confirmation password"
+        })
+    }
     
     // Check to see if provided password matches that of current user
     bcrypt.compare(password, req.user.password, async (err, match) => {
         if (!match) {
             res.json({
                 status: "ERROR",
-                err: 'Provided password does not match our records'
+                message: 'Provided password does not match our records'
             })
         }
         if (err) {
@@ -74,15 +94,22 @@ router.put('/update/:uuid/password', async (req, res) => {
                 })
             })
             .catch(err => {
-                res.json({
-                    status: "ERROR",
-                    err
-                })
+                // res.json({
+                //     status: "ERROR",
+                //     err
+                // })
             })
     })
 })
 
 router.post('/search', async (req, res) => {
+    if (req.body.search.trim() === '') {
+        return res.json({
+            status: "ERROR",
+            message: "All fields must be filled in"
+        })
+    }
+
     // Get all friends for that search
     let users = await User.findAll({
         where: {

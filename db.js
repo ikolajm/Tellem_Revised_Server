@@ -11,12 +11,13 @@ let dialectOpt = process.env.DATABASE_URL.includes("localhost") ? "" : {
 const sequelize = new Sequelize(`${process.env.DATABASE_URL}`, {
     dialect: "postgres",
     dialectOptions: dialectOpt,
+    logging: false
 });
 
 // Authenticate postgres connection
 sequelize.authenticate()
-.then(() => console.log('Successful connection to postgres database...'))
-.catch(err => console.log('POSTGRES CONNECTION FAILURE:', err));
+// .then(() => console.log('Successful connection to postgres database...'))
+// .catch(err => console.log('POSTGRES CONNECTION FAILURE:', err));
 
 // db Object init
 const db = {};

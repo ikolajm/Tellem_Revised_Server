@@ -5,6 +5,12 @@ const { v4: uuidv4 } = require('uuid');
 
 // Create conversation
 router.post("/create", async (req, res) => {
+    if (req.body.content.trim() === '') {
+        return res.json({
+            status: "ERROR",
+            message: "Please ensure the content field is filled in"
+        })
+    }
     let uuid1 = await uuidv4();
     let message = await Message.create({
         uuid: uuid1,
@@ -44,7 +50,7 @@ router.put("/edit/:id", async (req, res) => {
     })
 })
 
-// Edit message
+// Delete message
 router.delete("/delete/:id", async (req, res) => {
     Message.destroy(
         {
