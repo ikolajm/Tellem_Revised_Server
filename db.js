@@ -12,7 +12,7 @@ const sequelize = new Sequelize(`${process.env.DATABASE_URL}`, {
     dialect: "postgres",
     dialectOptions: dialectOpt,
     // UNCOMMENT LOGGING FOR CLEANER JEST TESTING **
-    // logging: false
+    logging: false
 });
 
 // Authenticate postgres connection

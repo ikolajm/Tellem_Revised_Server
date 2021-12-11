@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require('express')
 const app = express();
+const port = process.env.PORT || 5000;
 const seedUsers = require('./seed/data/seedUsers');
 const seedFriends = require('./seed/data/seedFriends');
 const seedRequests = require('./seed/data/seedRequests');
@@ -70,4 +71,6 @@ app.use("/message", Message);
 // seedConversations.createConversations();
 // seedMessages.createMessages();
 
-module.exports = http;
+// Comment .listen and uncomment module.exports for jest + supertest **
+// module.exports = http;
+http.listen(port, () => console.log(`App is listening on port ${port}`));
