@@ -1,6 +1,7 @@
 const request = require("supertest");
 const http = require('../index');
 
+// MAKE SURE TO COMMENT/UNCOMMENT NECESSARY CODE WHEN JEST TESTING **
 describe('Initial test to see if jest is working', () => {
     test('1 === 1', () => {
         expect(1).toBe(1);
